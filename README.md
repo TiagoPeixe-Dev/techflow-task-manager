@@ -81,8 +81,8 @@ pip install -r requirements.txt
 python run.py
 ```
 
-A aplicação sobe em `http://127.0.0.1:5000`. Crie uma conta em `/register` e
-faça login para acessar o quadro de tarefas.
+A aplicação sobe em http://127.0.0.1:5000. Crie uma conta na tela de
+cadastro e faça login para acessar o quadro de tarefas.
 
 ## Testes automatizados
 
@@ -100,10 +100,10 @@ pytest -v
 
 ## Controle de qualidade (CI)
 
-O workflow em [`.github/workflows/ci.yml`](.github/workflows/ci.yml) roda
-automaticamente a cada push/pull request na branch `main`, verificando
-padronização do código com flake8 e executando a suíte de testes com
-pytest.
+O workflow definido em [.github/workflows/ci.yml](.github/workflows/ci.yml)
+roda automaticamente a cada push ou pull request na branch principal,
+verificando padronização do código com flake8 e executando a suíte de
+testes com pytest.
 
 ## Gestão de Mudanças
 
