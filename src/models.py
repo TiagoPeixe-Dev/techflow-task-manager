@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -26,7 +26,7 @@ class Task(db.Model):
     title = db.Column(db.String(140), nullable=False)
     description = db.Column(db.String(500), nullable=True, default="")
     status = db.Column(db.String(20), nullable=False, default="a_fazer")
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
     def to_dict(self):
