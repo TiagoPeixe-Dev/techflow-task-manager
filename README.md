@@ -111,8 +111,35 @@ realiza duas verificações:
 
 ## Gestão de Mudanças
 
-_(Esta seção será atualizada com a justificativa da mudança de escopo
-simulada, conforme descrito na tarefa de Gestão de Mudanças do trabalho.)_
+**Mudança de escopo:** adição de um campo de **prioridade** (`baixa`, `media`,
+`alta`, `critica`) às tarefas, com o quadro passando a exibi-las ordenadas da
+mais para a menos crítica e um indicador visual (badge colorido) por card.
+
+**Justificativa:** o desafio original do cliente (TechFlow Solutions, a
+pedido da startup de logística) menciona explicitamente a necessidade de
+"priorizar tarefas críticas" — requisito que não estava coberto pela versão
+inicial do CRUD, focada apenas em título, descrição e status. Sem um campo de
+prioridade, a equipe não tinha como sinalizar quais tarefas exigiam atenção
+imediata dentro do fluxo de trabalho logístico, o que compromete o objetivo
+central do sistema.
+
+**Como foi conduzida:**
+
+1. Um novo card, *"Implementar mudança de escopo: prioridade das tarefas"*,
+   já existia no backlog (coluna **To Do**) do quadro Kanban e foi movido
+   para **In Progress** no início da implementação;
+2. O modelo `Task` foi estendido com o campo `priority` e valor padrão
+   `media`, mantendo compatibilidade com as tarefas já existentes;
+3. As rotas de criação e uma nova rota de atualização de prioridade foram
+   implementadas com validação de entrada (prioridade inválida é rejeitada);
+4. Os testes automatizados foram ampliados para cobrir o novo campo;
+5. O card foi movido para **Done** após o commit da funcionalidade e a
+   passagem do pipeline de CI.
+
+Esse ciclo demonstra, em escala reduzida, como uma metodologia ágil apoiada em
+um quadro Kanban absorve mudanças de escopo sem interromper o fluxo de
+trabalho: a mudança entra como um novo item no backlog, é priorizada,
+implementada, testada e validada como qualquer outra tarefa.
 
 ## Quadro Kanban
 

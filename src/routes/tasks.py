@@ -10,8 +10,12 @@ tasks_bp = Blueprint("tasks", __name__)
 @tasks_bp.route("/")
 @login_required
 def list_tasks():
-    tasks = Task.query.filter_by(user_id=current_user.id).order_by(Task.created_at.desc()).all()
-    return render_template("tasks.html", tasks=tasks, statuses=Task.STATUSES)
+    priority_rank = {priority: i for i, priority in enumerate(reversed(Task.PRIORITIES))}
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    tasks.sort(key=lambda task: priority_rank[task.priority], reverse=True)
+    return render_template(
+        "tasks.html", tasks=tasks, statuses=Task.STATUSES, priorities=Task.PRIORITIES
+    )
 
 
 @tasks_bp.route("/tasks", methods=["POST"])
@@ -23,10 +27,15 @@ def create_task():
         flash("O título da tarefa é obrigatório.")
         return redirect(url_for("tasks.list_tasks"))
 
+    priority = request.form.get("priority", "media")
+    if priority not in Task.PRIORITIES:
+        priority = "media"
+
     task = Task(
         title=title,
         description=request.form.get("description", "").strip(),
         status="a_fazer",
+        priority=priority,
         user_id=current_user.id,
     )
     db.session.add(task)
@@ -52,6 +61,21 @@ def update_task(task_id):
         return redirect(url_for("tasks.list_tasks"))
 
     task.status = status
+    db.session.commit()
+    return redirect(url_for("tasks.list_tasks"))
+
+
+@tasks_bp.route("/tasks/<int:task_id>/priority", methods=["POST"])
+@login_required
+def update_priority(task_id):
+    task = _get_owned_task_or_404(task_id)
+
+    priority = request.form.get("priority")
+    if priority not in Task.PRIORITIES:
+        flash("Prioridade inválida.")
+        return redirect(url_for("tasks.list_tasks"))
+
+    task.priority = priority
     db.session.commit()
     return redirect(url_for("tasks.list_tasks"))
 

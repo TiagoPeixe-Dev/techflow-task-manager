@@ -21,11 +21,13 @@ class User(UserMixin, db.Model):
 
 class Task(db.Model):
     STATUSES = ("a_fazer", "em_progresso", "concluido")
+    PRIORITIES = ("baixa", "media", "alta", "critica")
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140), nullable=False)
     description = db.Column(db.String(500), nullable=True, default="")
     status = db.Column(db.String(20), nullable=False, default="a_fazer")
+    priority = db.Column(db.String(20), nullable=False, default="media")
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
@@ -35,4 +37,5 @@ class Task(db.Model):
             "title": self.title,
             "description": self.description,
             "status": self.status,
+            "priority": self.priority,
         }
