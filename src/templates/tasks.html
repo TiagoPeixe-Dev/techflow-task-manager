@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Minhas Tarefas</h2>
+
+  <form method="post" action="{{ url_for('tasks.create_task') }}" class="new-task">
+    <input type="text" name="title" placeholder="Título da tarefa" required>
+    <input type="text" name="description" placeholder="Descrição (opcional)">
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <div class="board">
+    {% for status in statuses %}
+      <section class="column">
+        <h3>{{ status.replace('_', ' ') | title }}</h3>
+        {% for task in tasks if task.status == status %}
+          <article class="card">
+            <strong>{{ task.title }}</strong>
+            {% if task.description %}<p>{{ task.description }}</p>{% endif %}
+            <div class="card-actions">
+              <form method="post" action="{{ url_for('tasks.update_task', task_id=task.id) }}">
+                <select name="status" onchange="this.form.submit()">
+                  {% for s in statuses %}
+                    <option value="{{ s }}" {% if s == task.status %}selected{% endif %}>
+                      {{ s.replace('_', ' ') | title }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </form>
+              <form method="post" action="{{ url_for('tasks.delete_task', task_id=task.id) }}">
+                <button type="submit">Excluir</button>
+              </form>
+            </div>
+          </article>
+        {% endfor %}
+      </section>
+    {% endfor %}
+  </div>
+{% endblock %}
