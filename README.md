@@ -1,45 +1,44 @@
 # TechFlow Task Manager
 
-Sistema web de gerenciamento de tarefas desenvolvido pela **TechFlow Solutions**
-para uma startup de logística, com o objetivo de permitir o acompanhamento do
-fluxo de trabalho em tempo real, priorização de tarefas críticas e
-monitoramento do desempenho da equipe.
+Sistema web de gerenciamento de tarefas desenvolvido pela TechFlow Solutions
+para uma startup de logística. A ideia é permitir que a equipe acompanhe o
+fluxo de trabalho em tempo real, priorize tarefas críticas e monitore o
+andamento das atividades.
 
-Este repositório é o produto de um trabalho acadêmico da disciplina de
-Engenharia de Software, simulando o ciclo de vida completo de um projeto ágil:
-planejamento, desenvolvimento, controle de qualidade e gestão de mudanças.
+Este repositório é o trabalho prático da disciplina de Engenharia de
+Software, simulando o ciclo de vida de um projeto ágil: planejamento,
+desenvolvimento, controle de qualidade e gestão de mudanças.
 
 ## Objetivo do projeto
 
-Fornecer um sistema simples e funcional em que cada usuário possa:
-
-- Criar uma conta e autenticar-se de forma segura (senhas com hash);
-- Cadastrar, visualizar, atualizar e excluir suas próprias tarefas (CRUD);
-- Organizar as tarefas em um quadro estilo Kanban com três status:
-  **A Fazer**, **Em Progresso** e **Concluído**.
+Cada usuário pode criar uma conta, autenticar-se de forma segura (senha
+armazenada com hash) e gerenciar suas próprias tarefas: criar, visualizar,
+atualizar e excluir (CRUD), organizando tudo em um quadro estilo Kanban com
+três colunas — A Fazer, Em Progresso e Concluído.
 
 ## Escopo inicial
 
-O escopo inicial do projeto contempla:
+A primeira versão do projeto contempla:
 
-- Cadastro e login de usuários;
-- CRUD de tarefas vinculado ao usuário autenticado;
-- Visualização das tarefas em formato de quadro Kanban;
-- Testes automatizados cobrindo autenticação e CRUD;
+- Cadastro e login de usuários
+- CRUD de tarefas vinculado ao usuário autenticado
+- Quadro Kanban para visualização das tarefas
+- Testes automatizados cobrindo autenticação e CRUD
 - Pipeline de integração contínua (GitHub Actions) validando qualidade de
-  código e execução dos testes a cada alteração.
+  código e execução dos testes a cada alteração
 
-> A seção [Gestão de Mudanças](#gestão-de-mudanças) documenta uma alteração de
-> escopo simulada, feita após a entrega da versão inicial.
+A seção [Gestão de Mudanças](#gestão-de-mudanças) mais abaixo conta como esse
+escopo foi ampliado depois da entrega inicial.
 
 ## Metodologia adotada
 
-O desenvolvimento seguiu uma abordagem **Kanban**, com o fluxo de trabalho
-organizado no GitHub Projects em três colunas (**To Do**, **In Progress**,
-**Done**). Cada funcionalidade foi tratada como um cartão individual, movido
-entre as colunas conforme o progresso, e implementada em commits pequenos e
-descritivos — favorecendo entrega contínua e rastreabilidade das mudanças, em
-vez de sprints com prazos fixos (como no Scrum).
+O desenvolvimento seguiu Kanban, com o fluxo de trabalho organizado no
+GitHub Projects em três colunas (To Do, In Progress, Done). Cada
+funcionalidade virou um cartão, movido entre as colunas conforme o
+progresso, e implementada em commits pequenos e descritivos. A escolha por
+Kanban em vez de Scrum foi por não fazer sentido dividir um projeto desse
+tamanho em sprints com prazos fixos — o fluxo contínuo de cartões representa
+melhor o ritmo real do desenvolvimento.
 
 ## Estrutura do repositório
 
@@ -67,7 +66,7 @@ Pré-requisitos: Python 3.11+.
 
 ```bash
 # 1. Clonar o repositório
-git clone https://github.com/<seu-usuario>/techflow-task-manager.git
+git clone https://github.com/TiagoPeixe-Dev/techflow-task-manager.git
 cd techflow-task-manager
 
 # 2. Criar e ativar um ambiente virtual
@@ -87,11 +86,10 @@ faça login para acessar o quadro de tarefas.
 
 ## Testes automatizados
 
-Os testes usam **Pytest** e o cliente de testes do Flask, cobrindo:
-
-- Cadastro, login, logout e validação de credenciais;
-- Criação, atualização de status, exclusão e validação de entrada das tarefas;
-- Isolamento de dados entre usuários diferentes.
+Os testes usam Pytest e o cliente de testes do Flask, cobrindo cadastro,
+login, logout e validação de credenciais, além de criação, atualização de
+status, exclusão e validação de entrada das tarefas, e o isolamento de dados
+entre usuários diferentes.
 
 Para rodar localmente:
 
@@ -102,47 +100,35 @@ pytest -v
 
 ## Controle de qualidade (CI)
 
-O workflow em [`.github/workflows/ci.yml`](.github/workflows/ci.yml) é
-executado automaticamente a cada `push`/`pull request` na branch `main` e
-realiza duas verificações:
-
-1. **Lint** com `flake8`, garantindo padronização do código;
-2. **Testes automatizados** com `pytest`.
+O workflow em [`.github/workflows/ci.yml`](.github/workflows/ci.yml) roda
+automaticamente a cada push/pull request na branch `main`, verificando
+padronização do código com flake8 e executando a suíte de testes com
+pytest.
 
 ## Gestão de Mudanças
 
-**Mudança de escopo:** adição de um campo de **prioridade** (`baixa`, `media`,
-`alta`, `critica`) às tarefas, com o quadro passando a exibi-las ordenadas da
-mais para a menos crítica e um indicador visual (badge colorido) por card.
+Depois da primeira versão do CRUD já funcionando, adicionamos um campo de
+prioridade às tarefas (baixa, media, alta, critica). O quadro passou a
+ordenar as tarefas da mais crítica para a menos crítica e cada card ganhou
+um indicador visual colorido de acordo com a prioridade.
 
-**Justificativa:** o desafio original do cliente (TechFlow Solutions, a
-pedido da startup de logística) menciona explicitamente a necessidade de
-"priorizar tarefas críticas" — requisito que não estava coberto pela versão
-inicial do CRUD, focada apenas em título, descrição e status. Sem um campo de
-prioridade, a equipe não tinha como sinalizar quais tarefas exigiam atenção
-imediata dentro do fluxo de trabalho logístico, o que compromete o objetivo
-central do sistema.
+Essa mudança não estava no escopo original, mas fazia falta: o desafio da
+TechFlow Solutions pede explicitamente que o sistema ajude a priorizar
+tarefas críticas, e a primeira versão só tinha título, descrição e status —
+não havia como sinalizar que uma tarefa era mais urgente que outra. Sem
+esse campo, o sistema não cumpria de verdade um dos objetivos que o cliente
+pediu.
 
-**Como foi conduzida:**
-
-1. Um novo card, *"Implementar mudança de escopo: prioridade das tarefas"*,
-   já existia no backlog (coluna **To Do**) do quadro Kanban e foi movido
-   para **In Progress** no início da implementação;
-2. O modelo `Task` foi estendido com o campo `priority` e valor padrão
-   `media`, mantendo compatibilidade com as tarefas já existentes;
-3. As rotas de criação e uma nova rota de atualização de prioridade foram
-   implementadas com validação de entrada (prioridade inválida é rejeitada);
-4. Os testes automatizados foram ampliados para cobrir o novo campo;
-5. O card foi movido para **Done** após o commit da funcionalidade e a
-   passagem do pipeline de CI.
-
-Esse ciclo demonstra, em escala reduzida, como uma metodologia ágil apoiada em
-um quadro Kanban absorve mudanças de escopo sem interromper o fluxo de
-trabalho: a mudança entra como um novo item no backlog, é priorizada,
-implementada, testada e validada como qualquer outra tarefa.
+O card "Implementar mudança de escopo: prioridade das tarefas" já existia
+no backlog do Kanban antes de começarmos a implementação, foi movido para
+In Progress durante o desenvolvimento e passou por um commit dedicado,
+cobrindo modelo, rotas, template, estilo visual e testes. Só foi para Done
+depois que o CI passou. Isso é meio o ponto de trabalhar com Kanban: uma
+mudança de escopo entra como mais um item do backlog e segue o mesmo fluxo
+de qualquer outra tarefa, sem precisar renegociar um sprint inteiro.
 
 ## Quadro Kanban
 
-O planejamento e acompanhamento das tarefas está disponível na aba
-[Projects](../../projects) deste repositório, organizado nas colunas **To
-Do**, **In Progress** e **Done**.
+O planejamento e acompanhamento das tarefas está na aba
+[Projects](../../projects) deste repositório, organizado nas colunas To Do,
+In Progress e Done.
