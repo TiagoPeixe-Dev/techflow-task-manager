@@ -39,7 +39,3 @@ flowchart LR
 | Atualizar prioridade da tarefa | Usuário reclassifica a tarefa entre baixa, média, alta ou crítica (funcionalidade adicionada na mudança de escopo). |
 | Excluir tarefa | Usuário remove definitivamente uma tarefa. |
 
-> Nota: para incluir este diagrama no documento da Parte Teórica (PDF/DOCX),
-> renderize o bloco Mermaid acima em https://mermaid.live e exporte como
-> imagem (PNG/SVG), ou tire um print da visualização do GitHub, que renderiza
-> Mermaid nativamente em arquivos `.md`.

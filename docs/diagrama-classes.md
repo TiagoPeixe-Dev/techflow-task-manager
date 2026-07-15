@@ -55,7 +55,3 @@ classDiagram
   como validação nas camadas de rota (`src/routes/tasks.py`) antes de
   persistir qualquer alteração.
 
-> Nota: assim como o diagrama de casos de uso, este diagrama pode ser
-> renderizado em https://mermaid.live para exportação de imagem, ou
-> visualizado diretamente no GitHub (que renderiza blocos `mermaid` em
-> arquivos Markdown).
