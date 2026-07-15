@@ -20,6 +20,7 @@ def register():
             flash("Usuário e senha são obrigatórios.")
             return redirect(url_for("auth.register"))
 
+        # nome de usuário é único; evita duas contas com o mesmo login
         if User.query.filter_by(username=username).first():
             flash("Este usuário já existe.")
             return redirect(url_for("auth.register"))

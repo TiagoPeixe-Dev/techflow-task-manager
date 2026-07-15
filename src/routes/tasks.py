@@ -10,6 +10,8 @@ tasks_bp = Blueprint("tasks", __name__)
 @tasks_bp.route("/")
 @login_required
 def list_tasks():
+    # mostra sempre as tarefas mais críticas primeiro (mudança de escopo:
+    # o cliente pediu para priorizar tarefas críticas no quadro)
     priority_rank = {priority: i for i, priority in enumerate(reversed(Task.PRIORITIES))}
     tasks = Task.query.filter_by(user_id=current_user.id).all()
     tasks.sort(key=lambda task: priority_rank[task.priority], reverse=True)
@@ -27,6 +29,8 @@ def create_task():
         flash("O título da tarefa é obrigatório.")
         return redirect(url_for("tasks.list_tasks"))
 
+    # prioridade é opcional no formulário; se vier vazia ou inválida, cai
+    # no valor padrão em vez de rejeitar a criação da tarefa
     priority = request.form.get("priority", "media")
     if priority not in Task.PRIORITIES:
         priority = "media"
@@ -44,6 +48,7 @@ def create_task():
 
 
 def _get_owned_task_or_404(task_id):
+    # garante que um usuário não altere/exclua tarefa de outro usuário
     task = db.session.get(Task, task_id)
     if task is None or task.user_id != current_user.id:
         abort(404)

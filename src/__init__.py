@@ -9,6 +9,8 @@ login_manager = LoginManager()
 
 
 def create_app(config_object="src.config.Config"):
+    # application factory: cria uma instância nova do Flask a cada chamada,
+    # o que facilita usar uma config diferente nos testes (ver TestConfig)
     app = Flask(__name__)
     app.config.from_object(config_object)
     os.makedirs(os.path.join(app.root_path, "..", "instance"), exist_ok=True)

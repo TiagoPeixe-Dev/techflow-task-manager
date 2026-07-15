@@ -9,7 +9,9 @@ from src import db
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
+    # nunca guardamos a senha em texto puro, só o hash
     password_hash = db.Column(db.String(255), nullable=False)
+    # se o usuário for excluído, suas tarefas vão junto (cascade)
     tasks = db.relationship("Task", backref="owner", lazy=True, cascade="all, delete-orphan")
 
     def set_password(self, password):
@@ -20,6 +22,8 @@ class User(UserMixin, db.Model):
 
 
 class Task(db.Model):
+    # únicos valores aceitos para status e prioridade; a validação de
+    # entrada nas rotas usa essas tuplas para rejeitar valores fora daqui
     STATUSES = ("a_fazer", "em_progresso", "concluido")
     PRIORITIES = ("baixa", "media", "alta", "critica")
 

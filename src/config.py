@@ -12,6 +12,8 @@ class Config:
 
 
 class TestConfig(Config):
+    # usada pelos testes automatizados (ver tests/conftest.py): banco em
+    # memória, então cada teste começa do zero e não mexe no banco real
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     WTF_CSRF_ENABLED = False
